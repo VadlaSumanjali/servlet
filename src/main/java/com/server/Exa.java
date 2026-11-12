@@ -58,10 +58,29 @@ public class Exa extends GenericServlet {
 
 		        if (count > 0) {
 		            out.println("<h2>Registration Successful!</h2>");
-		        } else {
-		            out.println("Registration Failed");
-		        }
+		        } 
+		        
 		    }
+		    String select ="select * from userdata";
+		    try {
+		    	Connection con = DriverManager.getConnection(
+			            url, "root", "root");
+				PreparedStatement p=con.prepareStatement(select);
+				ResultSet rs=p.executeQuery();
+				 while (rs.next()) {
+
+                     out.println("<tr>");
+
+                     out.println("<td>" + rs.getString(1) + "</td>");
+                     out.println("<td>" + rs.getString(2) + "</td>");
+                     out.println("<td>" + rs.getInt(3) + "</td>");
+                     out.println("<td>" + rs.getString(4) + "</td>");
+
+                     out.println("</tr>");
+                 }
+			} catch (Exception e) {
+				System.out.println(e);
+			}
 
 		} catch (SQLException | ClassNotFoundException e) {
 		    out.println("Database Error: " + e.getMessage());
